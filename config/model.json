@@ -1,0 +1,120 @@
+
+{
+  "project": {
+    "name": "Интеллектуальная нечёткая система оценки производственного риска цеха",
+    "version": "1.0.0",
+    "random_seed": 42
+  },
+  "dataset": {
+    "path": "data/production.csv",
+    "minimum_records": 1500,
+    "target_column": "expert_risk",
+    "target_range": [
+      0,
+      100
+    ]
+  },
+  "inputs": {
+    "utilization": {
+      "label": "Загрузка оборудования",
+      "minimum": 40,
+      "maximum": 120,
+      "unit": "%"
+    },
+    "defect_rate": {
+      "label": "Доля брака",
+      "minimum": 0,
+      "maximum": 15,
+      "unit": "%"
+    },
+    "downtime_pct": {
+      "label": "Доля времени простоя",
+      "minimum": 0,
+      "maximum": 30,
+      "unit": "%"
+    },
+    "overdue_orders": {
+      "label": "Количество просроченных заказов",
+      "minimum": 0,
+      "maximum": 40,
+      "unit": "заказов"
+    },
+    "staff_availability": {
+      "label": "Доступность персонала",
+      "minimum": 60,
+      "maximum": 100,
+      "unit": "%"
+    },
+    "energy_overrun": {
+      "label": "Превышение энергопотребления",
+      "minimum": -10,
+      "maximum": 30,
+      "unit": "%"
+    }
+  },
+  "output": {
+    "name": "risk_score",
+    "minimum": 0,
+    "maximum": 100,
+    "categories": {
+      "low": {
+        "label": "Низкий",
+        "minimum": 0,
+        "maximum": 25
+      },
+      "moderate": {
+        "label": "Умеренный",
+        "minimum": 25,
+        "maximum": 50
+      },
+      "high": {
+        "label": "Высокий",
+        "minimum": 50,
+        "maximum": 75
+      },
+      "critical": {
+        "label": "Критический",
+        "minimum": 75,
+        "maximum": 100
+      }
+    }
+  },
+  "fuzzy_models": {
+    "mamdani": {
+      "enabled": true,
+      "defuzzification": "centroid",
+      "and_operator": "minimum",
+      "or_operator": "maximum"
+    },
+    "sugeno": {
+      "enabled": true,
+      "order": 0,
+      "consequents": {
+        "low": 12.5,
+        "moderate": 37.5,
+        "high": 62.5,
+        "critical": 87.5
+      }
+    }
+  },
+  "clustering": {
+    "method": "fuzzy_c_means",
+    "cluster_counts_to_evaluate": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "exclude_target_from_features": true,
+    "metrics": [
+      "fpc",
+      "silhouette"
+    ]
+  },
+  "optimization": {
+    "enabled": true,
+    "objective_target": "expert_risk",
+    "use_held_out_test_data": true
+  }
+}

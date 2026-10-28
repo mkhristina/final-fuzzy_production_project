@@ -1,0 +1,5 @@
+﻿scenario,utilization,defect_rate,downtime_pct,overdue_orders,staff_availability,energy_overrun,mamdani_risk,mamdani_category,sugeno_risk,sugeno_category,absolute_difference
+Благоприятный,80,1,2,2,98,-5,9.286,Низкий,12.5,Низкий,3.214
+Обычный,85,4,7,8,90,5,35.0,Умеренный,37.5,Умеренный,2.5
+Напряжённый,105,9,18,24,78,18,75.691,Критический,73.972,Высокий,1.719
+Критический,118,14,28,38,63,28,77.44,Критический,81.25,Критический,3.81

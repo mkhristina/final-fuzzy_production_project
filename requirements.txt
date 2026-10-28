@@ -1,0 +1,12 @@
+
+numpy
+pandas
+scikit-fuzzy
+scipy
+scikit-learn
+matplotlib
+seaborn
+networkx
+pytest
+streamlit
+Pillow
